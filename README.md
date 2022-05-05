@@ -1,26 +1,25 @@
-# TUNIC LiveSplit One AutoSplitter
 
-Livesplit One AutoSplitter for the game TUNIC with customizable splits
+# Rayman 2 LiveSplit One AutoSplitter
 
-![Preview](/preview.gif)
+Livesplit One AutoSplitter for the game Rayman 2 (PC)
+
+![Preview](/preview.png)
 
 # Description
 
-This program allows TUNIC autosplitting on LiveSplit One Browser, which is CSS customizable unlike original LiveSplit.
+This program allows Rayman 2 autosplitting on LiveSplit One.
 
-I suggest using [LiveSplit One OBS Layout](https://github.com/jeanwll/LiveSplitOne-OBS-Layout) which was made alongside this project.
+I suggest using [jeanwll's LiveSplit One OBS Layout](https://github.com/jeanwll/LiveSplitOne-OBS-Layout) along with it.
+
+![Preview](/previewCustomCss.gif)
 
 # Usage
 
-1. Edit splits.txt
-    - Each line is a split condition, either an [area number](https://github.com/jeanwll/TUNIC-LiveSplitOne-AutoSplitter/blob/main/Areas.md) or an [event](https://github.com/jeanwll/TUNIC-LiveSplitOne-AutoSplitter/blob/main/Events.md)
-    - Order them accordingly to your splits order
+1. Start AutoSplitter.exe
 
-2. Start AutoSplitter.exe
-
-3. Interact OBS browser source
+2. Interact OBS browser source
     - Select Compare Against: "Game Time"
     - Connect to server "ws://localhost" (should be in clipboard)
 
 ___
-Credit to [Ero](https://github.com/just-ero) for his [MTK Library](https://github.com/just-ero/MemoryToolKit) and overall guidance.
+Credit to [jeanwll](https://github.com/jeanwll) for the [initial project](https://github.com/jeanwll/TUNIC-LiveSplitOne-AutoSplitter)  on the game TUNIC.
