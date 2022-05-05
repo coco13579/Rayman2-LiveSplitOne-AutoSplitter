@@ -1,6 +1,8 @@
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
+namespace AutoSplitter;
+
 class LSO : WebSocketBehavior
 {
     public Program Program;
@@ -10,14 +12,14 @@ class LSO : WebSocketBehavior
         if (Program.Connected)
         {
             Close();
-            
+
             return;
         }
 
         Program.LSO = this;
         Program.Connected = UI.ServerConnected = true;
 
-        while (ConnectionState == WebSocketState.Open);
+        while (ConnectionState == WebSocketState.Open) ;
 
         Program.Connected = UI.ServerConnected = false;
     }

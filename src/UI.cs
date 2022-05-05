@@ -1,28 +1,32 @@
+namespace AutoSplitter;
+
 class UI
 {
-    bool _gameHooked = false;
+    bool _gameHooked;
     bool _serverConnected;
     readonly string _serverAddress;
     readonly string _resetKey;
     public bool GameHooked
     {
-        set {
+        set
+        {
             _gameHooked = value;
-            
+
             Update();
         }
     }
     public bool ServerConnected
     {
-        set {
+        set
+        {
             _serverConnected = value;
-            
+
             Update();
 
             if (value)
                 return;
-            
-            Thread t = new Thread(() => Clipboard.SetText(_serverAddress));
+
+            var t = new Thread(() => Clipboard.SetText(_serverAddress));
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
         }
@@ -38,7 +42,7 @@ class UI
     void Update()
     {
         Console.Clear();
-        
+
         if (_serverConnected)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -47,7 +51,7 @@ class UI
         }
         else
             Console.WriteLine($"Awaiting LiveSplit One connection to server '{_serverAddress}' (copied to clipboard).");
-        
+
         if (_gameHooked)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -56,7 +60,7 @@ class UI
         }
         else
             Console.WriteLine("Waiting for game to start.");
-        
+
         if (_serverConnected)
             Console.WriteLine($"\nPress {_resetKey} to reset, or ENTER to exit.");
         else

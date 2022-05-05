@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/obj
+/src/bin
+/src/.vs/AutoSplitter
+/src/AutoSplitter.sln

@@ -1,4 +1,7 @@
 ﻿using WebSocketSharp.Server;
+
+namespace AutoSplitter;
+
 class Program
 {
     public bool Connected = false;
@@ -6,37 +9,25 @@ class Program
     const string _address = "ws://localhost";
     const ConsoleKey _resetKey = ConsoleKey.R;
     readonly Game _game;
-    readonly Splitter _splitter;
     readonly WebSocketServer _server = new(_address);
 
     static void Main()
     {
-        Console.Title = "TUNIC LiveSplit One AutoSplitter";
+        Console.Title = "Rayman 2 LiveSplit One AutoSplitter";
         Console.SetWindowSize(85, 6);
         Console.SetBufferSize(85, 6);
 
-        string path = @$"{Directory.GetCurrentDirectory()}\\splits.txt";
-
-        if (File.Exists(path))
-            new Program(System.IO.File.ReadAllLines(path));
-        else
-        {
-            Console.Clear();
-            Console.WriteLine("splits.txt not found");
-            Console.WriteLine("\nPress any key to exit.");
-            Console.ReadKey();
-        }
+        new Program();
     }
 
-    Program(string[] splits)
+    Program()
     {
         var ui = new UI(_address, _resetKey.ToString());
-        
+
         _game = new(ui);
-        _splitter = new(splits, _game);
 
         _server.Start();
-        _server.AddWebSocketService<LSO>("/", (LSO lso) => {
+        _server.AddWebSocketService("/", (LSO lso) => {
             lso.Program = this;
             lso.UI = ui;
         });
@@ -48,24 +39,37 @@ class Program
     {
         const ConsoleKey exitKey = ConsoleKey.Enter;
         ConsoleKey inputKey = default;
-        
+
         do
         {
             _game.Check();
 
-            if (Connected)
-                foreach (string command in _splitter.GetCommands())
-                    LSO.Send(command);
+            if (Connected && _game.Hooked)
+            {
+                CheckGameEvents();
+            }
 
             if (!Console.KeyAvailable)
                 continue;
-            
+
             inputKey = Console.ReadKey(true).Key;
 
             if (Connected && inputKey == _resetKey)
-                _splitter.ResetPressed = true;
+            {
+                LSO.Send("reset");
+                _game.ResetBooleans();
+            }
         } while (inputKey != exitKey);
 
         _server.Stop();
+    }
+
+    public void CheckGameEvents()
+    {
+        _game.FirstLevelMovement(LSO);
+        _game.LoadingScreen(LSO);
+        _game.LevelChanged(LSO);
+        _game.FinalBossDead(LSO);
+        _game.NewGameStarted(LSO);
     }
 }

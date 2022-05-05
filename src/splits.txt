@@ -1,5 +1,0 @@
-30
-22
-SV_ScavengerBossesDead : 1
-Librarian Dead Forever : 1
-SV_Fortress Arena_Spidertank Is Dead : 1
